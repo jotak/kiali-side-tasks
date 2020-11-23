@@ -1,0 +1,14 @@
+on:
+  issues:
+    types: [edited, closed, reopened, labeled]
+jobs:
+  sync-epic-job:
+    if: contains(github.event.issue.labels.*.name, 'subtask')
+    runs-on: ubuntu-latest
+    name: Sync epic issues with subtasks issues
+    steps:
+      - name: Sync Epic Issues
+        id: sync-epic
+        uses: kiali/kiali-epic-action@v1.0.1
+        with:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
